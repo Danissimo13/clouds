@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clouds
+  namespace: default
+  labels:
+    app: clouds
+    commit-hash: "{{.Values.commit_hash}}"
+    branch-name: "{{.Values.branch_name}}"
+spec:
+  replicas: {{.Values.replicas}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: clouds
+  template:
+    metadata:
+      labels:
+        app: clouds
+        commit-hash: "{{.Values.commit_hash}}"
+        branch-name: "{{.Values.branch_name}}"
+    spec:
+      nodeSelector:
+        nodeGroupPurpose: {{.Values.nodeGroupPurpose}}
+      containers:
+        - name: master
+          resources:
+            requests:
+              memory: {{.Values.reqMemory}}
+              cpu: {{.Values.reqCpuCores}}
+            limits:
+              memory: {{.Values.limMemory}}
+              cpu: {{.Values.limCpuCores}}
+          image: {{.Values.image}}
+          imagePullPolicy: {{.Values.imagePullPolicy}}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{.Values.environment}}"
+          ports:
+            - containerPort: 7000
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5

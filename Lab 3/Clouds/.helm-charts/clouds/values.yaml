@@ -1,0 +1,12 @@
+image:
+imagePullPolicy: Always
+replicas: 2
+cpuAverageUtilization: 90
+memoryAverageUtilization: 70
+reqCpuCores: "0.3"
+reqMemory: "0.3G"
+limCpuCores: "4"
+limMemory: "4G"
+environment:
+commit_hash: default
+branch_name: default
