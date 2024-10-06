@@ -1,5 +1,5 @@
 # Labs Team #9
-Lab1: ❌
+Lab1: ✅
 
 Lab2: ❌
 
