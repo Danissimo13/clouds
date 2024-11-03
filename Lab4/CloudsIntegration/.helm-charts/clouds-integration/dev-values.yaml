@@ -1,0 +1,9 @@
+image:
+imagePullPolicy: Always
+replicaCount: 1
+environment:
+nodeGroupPurpose: dumb
+top_secret:
+commit_hash:
+branch_name:
+  

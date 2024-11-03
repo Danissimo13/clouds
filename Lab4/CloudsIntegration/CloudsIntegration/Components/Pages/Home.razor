@@ -1,0 +1,30 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Домик</PageTitle>
+
+<div>
+    <img src="/images/rock.jpg" width="500" alt="Скала" />
+</div>
+<input type="text" value="@_text" @onchange="@((args) => OnTextChanged(args.Value?.ToString()))"/>
+<div>Пароль верный: @_isValid</div>
+
+@code {
+    private string _text;
+    private string _topSecret;
+    private bool _isValid;
+    
+    protected override void OnInitialized()
+    {
+        _topSecret = Environment.GetEnvironmentVariable("TOP_SECRET")!;
+        
+        base.OnInitialized();
+    }
+
+    private void OnTextChanged(string? text)
+    {
+        _text = text;
+        _isValid = text == _topSecret;
+        InvokeAsync(StateHasChanged);
+    }
+}

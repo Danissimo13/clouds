@@ -1,0 +1,49 @@
+name: "[Z] Build and deploy backend .net service"
+
+on:
+  workflow_call:
+    inputs:
+      helm-action:
+        required: true
+        type: string
+      service-name:
+        required: true
+        type: string
+      dockerfile-path:
+        required: true
+        type: string
+      workflow-action:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  build:
+    if: ${{ inputs.workflow-action == 'Build' || inputs.workflow-action == 'Build And Deploy' }}
+    uses: ./.github/workflows/wfc-build-image.yml
+    with:
+      environment: ${{inputs.environment}}
+      dockerfile-path: ${{inputs.dockerfile-path}}
+      registry-path: ${{inputs.service-name}}
+    secrets: inherit
+
+  deploy:
+    if: ${{ inputs.workflow-action == 'Deploy' }}
+    uses: ./.github/workflows/wfc-deploy-backend-service.yml
+    with:
+      environment: ${{inputs.environment}}
+      helm-action: ${{inputs.helm-action}}
+      service-name: ${{inputs.service-name}}
+    secrets: inherit
+          
+  build_and_deploy:
+    if: ${{ inputs.workflow-action == 'Build And Deploy' }}
+    needs: [build]
+    uses: ./.github/workflows/wfc-deploy-backend-service.yml
+    with:
+      environment: ${{inputs.environment}}
+      helm-action: ${{inputs.helm-action}}
+      service-name: ${{inputs.service-name}}
+    secrets: inherit

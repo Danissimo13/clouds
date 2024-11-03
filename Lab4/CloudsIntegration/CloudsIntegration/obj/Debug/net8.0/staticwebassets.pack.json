@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/obj/Debug/net8.0/scopedcss/projectbundle/CloudsIntegration.bundle.scp.css",
+      "PackagePath": "staticwebassets/CloudsIntegration.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/wwwroot/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/wwwroot/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/Users/yaroslav/Documents/Важное/Университет/4 курс/Облака/clouds/Lab4/CloudsIntegration/CloudsIntegration/wwwroot/images/rock.jpg",
+      "PackagePath": "staticwebassets/images/rock.jpg"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.CloudsIntegration.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.CloudsIntegration.props",
+      "PackagePath": "build\\CloudsIntegration.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.CloudsIntegration.props",
+      "PackagePath": "buildMultiTargeting\\CloudsIntegration.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.CloudsIntegration.props",
+      "PackagePath": "buildTransitive\\CloudsIntegration.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

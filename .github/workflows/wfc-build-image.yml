@@ -1,0 +1,43 @@
+name: "[Z] Build .NET image"
+
+on:
+  workflow_call:
+    inputs:
+      dockerfile-path:
+        required: true
+        type: string
+      registry-path:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get commit info
+        id: commit
+        uses: prompt/actions-commit-hash@96297fd87f37de8995123eefa42cfe774416d8f1
+
+      - name: Get Yandex token
+        uses: yc-actions/yc-iam-token@v1
+        id: yandex-cloud-iam-token
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_DEV_JSON_CREDENTIALS }}
+        
+      - name: Docker login in registry
+        uses: docker/login-action@v2.0.0
+        with:
+          registry: cr.yandex
+          username: iam
+          password: ${{ steps.yandex-cloud-iam-token.outputs.token }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          no-cache: true
+          tags: cr.yandex/crp76aifpa9n0b74vbhm/${{ inputs.registry-path }}:${{ steps.commit.outputs.short }}
+          file: ${{ inputs.dockerfile-path }}

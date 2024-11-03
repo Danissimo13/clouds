@@ -1,0 +1,44 @@
+name: "[Services] 🚀 Deploy Backend #1"
+run-name: ${{ inputs.workflow-action }} on ${{ inputs.environment }} by @${{ github.actor }} from ${{ github.ref }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      helm-action:
+        type: choice
+        description: Action
+        options:
+          - upgrade
+          - install
+          - lint
+          - template
+      workflow-action:
+        type: choice
+        description: Workflow Action
+        options:
+          - Build
+          - Deploy
+          - Build And Deploy
+      clouds-integration:
+        type: boolean
+        description: Clouds Integration Service
+      
+jobs:
+  clouds-integration:
+    if: ${{ inputs.clouds-integration }}
+    uses: ./.github/workflows/wfc-build-deploy-backend-service.yml
+    with:
+      helm-action: ${{inputs.helm-action}}
+      service-name: clouds-integration
+      dockerfile-path: ./Lab4/CloudsIntegration/CloudsIntegration/Dockerfile
+      environment: ${{inputs.environment}}
+      workflow-action: ${{inputs.workflow-action}}
+    secrets: inherit

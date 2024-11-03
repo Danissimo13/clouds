@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clouds-integration
+  namespace: dumb
+  labels:
+    app: clouds-integration
+    commit-hash: "{{.Values.commit_hash}}"
+    branch-name: "{{.Values.branch_name}}"
+spec:
+  replicas: {{.Values.replicaCount}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: clouds-integration
+  template:
+    metadata:
+      labels:
+        app: clouds-integration
+        commit-hash: "{{.Values.commit_hash}}"
+        branch-name: "{{.Values.branch_name}}"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "7100"
+        prometheus.io/path: "/metrics"
+    spec:
+      nodeSelector:
+        nodeGroupPurpose: {{.Values.nodeGroupPurpose}}
+      containers:
+        - name: clouds-integration
+          image: {{.Values.image}}
+          imagePullPolicy: {{.Values.imagePullPolicy}}
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{.Values.environment}}"
+            - name: TOP_SECRET
+              value: "{{.Values.top_secret}}"
+          ports:
+            - containerPort: 7100
+              name: http

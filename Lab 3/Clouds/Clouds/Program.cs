@@ -46,7 +46,7 @@ app.MapGet("/healthz", () => "ok")
     .WithName("HealthCheck")
     .WithOpenApi();
 
-app.MapGet("/newsuperpuperendpoint", () => "апупеть")
+app.MapGet("/newsuperpuperendpoint", () => "вау")
     .WithName("Wow")
     .WithOpenApi();
 

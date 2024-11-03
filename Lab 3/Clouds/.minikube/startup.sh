@@ -6,7 +6,7 @@ eval $(minikube -p minikube docker-env --shell=bash)
 eval $(SHELL=/bin/bash minikube -p minikube docker-env)
 
 cd ../
-docker build -t clouds:v2 -f ./Clouds/Dockerfile .
+docker build -t clouds:v1 -f ./Clouds/Dockerfile .
 
 kubectl label nodes minikube nodeGroupPurpose=minikube
 

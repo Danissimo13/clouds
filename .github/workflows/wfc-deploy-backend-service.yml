@@ -1,0 +1,47 @@
+name: "[Z] Deploy backend .net service"
+
+on:
+  workflow_call:
+    inputs:
+      helm-action:
+        required: true
+        type: string
+      service-name:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+        
+jobs:
+  deploy_dev:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.environment == 'dev' }}
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Get commit info
+        id: commit
+        uses: prompt/actions-commit-hash@v3
+
+      - name: Extract branch name
+        shell: bash
+        run: (echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" | sed 's#/#\_#g') >> $GITHUB_OUTPUT
+        id: extract_branch
+
+      - name: Deploy service to cluster
+        uses: wahyd4/kubectl-helm-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_DEV_CONFIG_DATA }}
+        with:
+          args: >
+            helm ${{ inputs.helm-action }} 
+            --set image=cr.yandex/crp76aifpa9n0b74vbhm/${{ inputs.service-name }}:${{ steps.commit.outputs.short }}
+            --set environment=Dev
+            --set commit_hash=${{ steps.commit.outputs.short }}
+            --set branch_name=${{ steps.extract_branch.outputs.branch }}
+            --set top_secret=${{ secrets.TOP_SECRET }}
+            ${{ inputs.service-name }} 
+            -f Lab4/CloudsIntegration/.helm-charts/${{ inputs.service-name }}/${{ inputs.environment }}-values.yaml
+            Lab4/CloudsIntegration/.helm-charts/${{ inputs.service-name }} 
+            --namespace dumb
